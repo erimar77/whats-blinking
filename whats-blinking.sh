@@ -109,12 +109,12 @@ for x in /sys/class/enclosure/*/*/locate; do
     elif [ "$value" -eq 1 ]; then
         echo "Host: $host_name, Plane: $plane, Slot: $slot, Drive: $drive_letter, Size: ${disk_size_tb} TB ,Locate Value: $value"
     fi
-done
 
-if [ "$summary" -eq 1 ]; then
-    echo "=== Summary ==="
-    echo "Total slots: $total_slots"
-    echo "Used slots: $used_slots"
-    echo "Empty slots: $empty_slots"
-    echo "Blinking disks: $blinking_disks"
-fi
+    if [ "$summary" -eq 1 ]; then
+        echo "=== Summary ==="
+        echo "Total slots: $total_slots"
+        echo "Used slots: $used_slots"
+        echo "Empty slots: $empty_slots"
+        echo "Blinking disks: $blinking_disks"
+    fi
+done
