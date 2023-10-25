@@ -71,7 +71,7 @@ for x in /sys/class/enclosure/*/*/locate; do
     if [ -f "$disk_size_file" ]; then
         disk_size=$(cat "$disk_size_file")
         # Convert to human-readable format if necessary
-        disk_size_gb=$(echo "$disk_size * 512 / 1024 / 1024 / 1024" | bc)
+        disk_size_gb=$((disk_size * 512 / 1024 / 1024 / 1024 ))
     else
         disk_size="Unknown"
         disk_size_gb="Unknown"
