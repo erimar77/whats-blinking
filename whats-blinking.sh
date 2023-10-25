@@ -49,6 +49,7 @@ done
 
 # Loop through and display slots
 for x in /sys/class/enclosure/*/*/locate; do
+    total_slots=$((total_slots +1))
     value=$(cat $x)
     enclosure_path=$(dirname $x)
     enclosure_id=$(basename $(dirname $enclosure_path))
@@ -86,6 +87,16 @@ for x in /sys/class/enclosure/*/*/locate; do
     else
         disk_size="Unknown"
         disk_size_tb="Unknown"
+    fi
+
+    if [ "$drive_letter" != "Empty" ]; then
+        used_slots=$((used_slots + 1))
+    else
+        empty_slots=$((empty_slots + 1))
+    fi
+
+    if [ "$value" -eq 1 ]; then
+        blinking_disks=$((blinking_disks + 1))
     fi
 
     # Control what to display based on command-line options
