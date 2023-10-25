@@ -71,20 +71,20 @@ for x in /sys/class/enclosure/*/*/locate; do
     if [ -f "$disk_size_file" ]; then
         disk_size=$(cat "$disk_size_file")
         # Convert to human-readable format if necessary
-        disk_size_gb=$((disk_size * 512 / 1024 / 1024 / 1024 ))
+        disk_size_tb=$((disk_size * 512 / 1000 / 1000 / 1000 /1000 ))
     else
         disk_size="Unknown"
-        disk_size_gb="Unknown"
+        disk_size_tb="Unknown"
     fi
 
     # Control what to display based on command-line options
     if [ "$show_all" -eq 1 ]; then
-        echo "Host: $host_name, Plane: $plane, Slot: $slot, Drive: $drive_letter, Size: ${disk_size_gb}GB, Locate Value: $value"
+        echo "Host: $host_name, Plane: $plane, Slot: $slot, Drive: $drive_letter, Size: ${disk_size_tb} TB, Locate Value: $value"
     elif [ "$show_empty" -eq 1 ]; then
         if [ "$drive_letter" == "Empty" ] && [ "$value" -ne 1 ]; then
-            echo "Host: $host_name, Plane: $plane, Slot: $slot, Drive: $drive_letter, Size: ${disk_size_gb}GB, Locate Value: $value"
+            echo "Host: $host_name, Plane: $plane, Slot: $slot, Drive: $drive_letter, Size: ${disk_size_tb} TB, Locate Value: $value"
         fi
     elif [ "$value" -eq 1 ]; then
-        echo "Host: $host_name, Plane: $plane, Slot: $slot, Drive: $drive_letter, Size: ${disk_size_gb}GB ,Locate Value: $value"
+        echo "Host: $host_name, Plane: $plane, Slot: $slot, Drive: $drive_letter, Size: ${disk_size_tb} TB ,Locate Value: $value"
     fi
 done
