@@ -8,6 +8,7 @@ display_help() {
     echo "Options:"
     echo "  --show-all      Display information for all slots."
     echo "  --show-empty    Display information only for empty slots."
+    echo "  --summary       Display a summary."
     echo "  --help          Display this help message."
     echo
     exit 0
@@ -16,6 +17,13 @@ display_help() {
 # Command-line options
 show_all=0
 show_empty=0
+summary=0
+
+# Summary variables
+total_slots=0
+used_slots=0
+blinking_disks=0
+empty_slots=0
 
 # Parse command-line options
 for arg in "$@"; do
@@ -25,6 +33,9 @@ for arg in "$@"; do
       ;;
     --show-empty)
       show_empty=1
+      ;;
+    --summary)
+      summary=1
       ;;
     --help|-h)
       display_help
@@ -88,3 +99,11 @@ for x in /sys/class/enclosure/*/*/locate; do
         echo "Host: $host_name, Plane: $plane, Slot: $slot, Drive: $drive_letter, Size: ${disk_size_tb} TB ,Locate Value: $value"
     fi
 done
+
+if [ "$summary" -eq 1 ]; then
+    echo "=== Summary ==="
+    echo "Total slots: $total_slots"
+    echo "Used slots: $used_slots"
+    echo "Empty slots: $empty_slots"
+    echo "Blinking disks: $blinking_disks"
+fi
